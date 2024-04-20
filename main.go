@@ -123,8 +123,6 @@ func aps(words []string) []string {
 	for i := 0; i < len(words); i++ {
 		word := words[i]
 		if word == "'" && i > 0 && i < len(words)-1 && x == 0 {
-			fmt.Println("x", x)
-			// plus :=
 			temp := words[:i]
 			words[i+1] = "'" + words[i+1]
 			words[i] = ""
@@ -132,7 +130,6 @@ func aps(words []string) []string {
 			words = temp
 			x = 1
 		} else if word == "'" && i > 0 && x == 1 {
-			fmt.Println("x", x)
 			words[i-1] = words[i-1] + "'"
 			words = append(words[:i], words[i+1:]...)
 			x = 0
