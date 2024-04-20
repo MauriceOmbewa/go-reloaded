@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// program starts here, at the main function
 func main() {
 	if len(os.Args) < 3 {
 		fmt.Println("Usage: go run main.go inputfile outputfile")
@@ -54,6 +55,7 @@ func main() {
 	}
 }
 
+// function deals with punctuations
 func punctuations(words []string) []string {
 	for i := 0; i < len(words); i++ {
 		if i > 0 && (words[i][0] == '.' || words[i][0] == ',' || words[i][0] == '!' || words[i][0] == '?' || words[i][0] == ':' || words[i][0] == ';') {
@@ -62,8 +64,9 @@ func punctuations(words []string) []string {
 				if words[i][j] == '.' || words[i][j] == ',' || words[i][j] == '!' || words[i][j] == '?' || words[i][j] == ':' || words[i][j] == ';' {
 					words[i-1] += string(words[i][j])
 				} else {
+					// If the character is not a punctuation mark, set special to false and break the loop.
 					special = false
-					words[i] = words[i][j:]
+					words[i] = words[i][j:] // Slice the word from the non-punctuation character and break the loop.
 					break
 				}
 			}
@@ -76,6 +79,7 @@ func punctuations(words []string) []string {
 	return words
 }
 
+// function deals with cap. up, low, bin and hex
 func caps(words []string) []string {
 	for i := 0; i < len(words); i++ {
 		word := words[i]
@@ -104,20 +108,13 @@ func caps(words []string) []string {
 					words[i-1] = strconv.FormatInt(decimal, 10)
 					words = append(words[:i], words[i+1:]...)
 				}
-			} else if word == "a" {
-				if words[i+1][0] == 'a' || words[i+1][0] == 'e' || words[i+1][0] == 'i' || words[i+1][0] == 'o' || words[i+1][0] == 'u' || words[i+1][0] == 'h' {
-					words[i] = "an"
-				}
-			} else if word == "A" {
-				if words[i+1][0] == 'a' || words[i+1][0] == 'e' || words[i+1][0] == 'i' || words[i+1][0] == 'o' || words[i+1][0] == 'u' || words[i+1][0] == 'h' {
-					words[i] = "An"
-				}
 			}
 		}
 	}
 	return words
 }
 
+// this function dels with "'"
 func aps(words []string) []string {
 	x := 0
 	for i := 0; i < len(words); i++ {
@@ -133,11 +130,20 @@ func aps(words []string) []string {
 			words[i-1] = words[i-1] + "'"
 			words = append(words[:i], words[i+1:]...)
 			x = 0
+		} else if word == "a" {
+			if words[i+1][0] == 'a' || words[i+1][0] == 'e' || words[i+1][0] == 'i' || words[i+1][0] == 'o' || words[i+1][0] == 'u' || words[i+1][0] == 'h' {
+				words[i] = "an"
+			}
+		} else if word == "A" {
+			if words[i+1][0] == 'a' || words[i+1][0] == 'e' || words[i+1][0] == 'i' || words[i+1][0] == 'o' || words[i+1][0] == 'u' || words[i+1][0] == 'h' {
+				words[i] = "An"
+			}
 		}
 	}
 	return words
 }
 
+// this function deals with cap and a number
 func capno(words []string) []string {
 	for i, word := range words {
 		if i > 0 {
@@ -157,6 +163,7 @@ func capno(words []string) []string {
 	return words
 }
 
+// this function deals with up and a number
 func upno(words []string) []string {
 	for i := 0; i < len(words); i++ {
 		word := words[i]
@@ -177,6 +184,7 @@ func upno(words []string) []string {
 	return words
 }
 
+// this function deals with low and a number
 func lowno(words []string) []string {
 	for i := 0; i < len(words); i++ {
 		word := words[i]
